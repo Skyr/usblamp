@@ -32,14 +32,10 @@ void USBLamp::open() {
 
     struct usb_bus *bus;
 
-    /* ... */
-
     for (bus = busses; bus; bus = bus->next) {
         struct usb_device *dev;
 
         for (dev = bus->devices; dev; dev = dev->next) {
-            /* Check if this device is a printer */
-
             //printf("%04X:%04X\n", dev->descriptor.idVendor, dev->descriptor.idProduct);
 
             if (ID_VENDOR == dev->descriptor.idVendor && ID_PRODUCT == dev->descriptor.idProduct) {
@@ -67,7 +63,7 @@ void USBLamp::send(char *bytes, int size) {
     int request = 0x09;
     int value = 0x200;
     int index = 0x00;
-    int timeout = 10;
+    int timeout = 100;
 
     int result;
     CALL(usb_control_msg(handler, requesttype, request, value, index, bytes, size, timeout))
